@@ -1,42 +1,55 @@
 class Solution {
 public:
     int minDays(vector<int>& arr, int m, int k) {
-         long long val = m * 1ll * k * 1ll;
-    int n = arr.size(); //size of the array
-    if (val > n) return -1; //impossible case.
-    //find maximum and minimum:
-    int mini = INT_MAX, maxi = INT_MIN;
-    for (int i = 0; i < n; i++) {
-        mini = min(mini, arr[i]);
-        maxi = max(maxi, arr[i]);
-    }
-
-    //apply binary search:
-    int low = mini, high = maxi;
-    while (low <= high) {
-        int mid = (low + high) / 2;
-        if (possible(arr, mid, m, k)) {
-            high = mid - 1;
+        int n=arr.size(); //total number of flowers present
+        long long int edge = m*1ll*k*1ll;
+        if(edge>n)
+            return -1;
+        //to find the maximum and mininmum blooming day
+        int max=INT_MIN;
+        int min=INT_MAX;
+        for(int i=0;i<n;i++) 
+        {
+            if(arr[i]>max)
+                max=arr[i];
+            if(arr[i]<min)
+                min=arr[i];
         }
-        else low = mid + 1;
-    }
-    return low;    
-}
-    bool possible(vector<int> &arr, int day, int m, int k) {
-    int n = arr.size(); //size of the array
-    int cnt = 0;
-    int noOfB = 0;
-    // count the number of bouquets:
-    for (int i = 0; i < n; i++) {
-        if (arr[i] <= day) {
-            cnt++;
+        int start=min;
+        int end=max;
+        int mid;
+        while(start<=end)
+        {
+            mid=(start+end)/2;
+            bool x=possible(arr,m,k,mid);
+            if(x==1)
+                end=mid-1;
+            else
+                start=mid+1;
         }
-        else {
-            noOfB += (cnt / k);
-            cnt = 0;
-        }
+        return start;
     }
-    noOfB += (cnt / k);
-    return noOfB >= m;
-}
+    bool possible(vector<int>& arr,int m, int k, int day)
+    {
+        int n=arr.size();
+        int cnt=0;
+        int b=0;//possible number of bouquets
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]<=day)
+                cnt++;
+            
+            else
+            {
+               
+                b=b+cnt/k;
+                cnt=0;
+            }
+        }
+        if(cnt!=0)
+            b=b+cnt/k;
+        if(b>=m)
+            return 1;
+        return 0;
+    }
 };
