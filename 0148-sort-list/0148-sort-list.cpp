@@ -53,8 +53,18 @@ public:
             return left;
         
         //for the head
-        ListNode* ans=new ListNode(-1);
+        ListNode* ans;
         ListNode* temp;
+        if(left->val<right->val)
+        {
+            ans=left;
+            left=left->next;
+        }
+        else
+        {
+            ans=right;
+            right=right->next;
+        }
         
         temp=ans;
         
@@ -86,7 +96,7 @@ public:
             right=right->next;
             temp=temp->next;
         }
-        return ans->next;
+        return ans;
         
     }
 };
