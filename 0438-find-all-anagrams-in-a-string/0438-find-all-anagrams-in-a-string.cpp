@@ -9,37 +9,51 @@ public:
         {
             given[p[i]]++;
         }
-        map<char,int> mpp;
+       // map<char,int> mpp;
         int start=0,end=0;
         while(end<n)
         {
             if((end-start+1)<w)
             {
-                mpp[s[end]]++;
+                if(given.find(s[end])!=given.end())
+                    ((given.find(s[end]))->second)--;
                 end++;
             }
             if((end-start+1)==w)
             {
                 int nt=1;
-                mpp[s[end]]++;
-                if(mpp.size()==given.size())
+                if(given.find(s[end])!=given.end())
+                    ((given.find(s[end]))->second)--;
+                for(auto it=given.begin();it!=given.end();it++)
                 {
-                    
-                    for(auto it=mpp.begin(),jt=given.begin();it!=mpp.end() && jt!=given.end();it++,jt++)
-                    {
-                        if(it->first != jt->first || it->second !=jt->second)
-                        {
-                            nt=0;
-                            break;
-                        }
-                    }
-                    if(nt==1)
-                        result.push_back(start);
+                    if(it->second!=0)
+                        nt=0;
+                }   
+                if(nt==1)
+                {
+                    result.push_back(start);
                 }
-                if(mpp[s[start]]!=1)
-                    mpp[s[start]]--;
-                else
-                    mpp.erase(s[start]);
+                if(given.find(s[start])!=given.end())
+                        given[s[start]]++;
+                
+                    
+                    
+//                 {
+                    
+//                     for(auto it=mpp.begin(),jt=given.begin();it!=mpp.end() && jt!=given.end();it++,jt++)
+//                     {
+//                         if(it->first != jt->first || it->second !=jt->second)
+//                         {
+//                             nt=0;
+//                             break;
+//                         }
+//                     }
+                    
+//                 }
+//                 if(mpp[s[start]]!=1)
+//                     mpp[s[start]]--;
+//                 else
+//                     mpp.erase(s[start]);
                 
                 
                 
