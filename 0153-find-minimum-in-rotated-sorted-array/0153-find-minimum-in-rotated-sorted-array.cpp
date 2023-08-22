@@ -3,7 +3,7 @@ public:
     int findMin(vector<int>& nums) {
         int n=nums.size();
         int start=0, end=n-1;
-        int middle,max=INT_MAX;
+        int middle,max=INT_MAX;     //here max means min
         while(start<=end)
         {
             middle=(start+end)/2;
